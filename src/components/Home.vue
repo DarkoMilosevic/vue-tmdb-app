@@ -51,6 +51,7 @@ export default {
     display: block;
     margin: 1rem;
     font-size: 1rem;
+    position: relative;
     &:focus {
       outline: none;
     }
