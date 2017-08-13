@@ -1,9 +1,12 @@
 <template>
     <section class="upcoming">
+        <h2 class="upcoming__heading">Upcoming Movies</h2>
         <div class="upcoming__movie" v-for="(movie, index) in upcomingList">
             <img :src=posterPath+movie.poster_path alt="" class="upcoming__movie-img"> 
+            <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
             <p class="upcoming__movie-title">{{ movie.title }}</p>
         </div>
+        <div @click.prevent="loadMore" class="upcoming__more">Load More</div>
     </section>
 </template>
 
@@ -16,7 +19,8 @@ export default {
   data () {
     return {
       upcomingList: [],
-      posterPath: 'http://image.tmdb.org/t/p/w185/'
+      posterPath: 'http://image.tmdb.org/t/p/w185/',
+      currentPage: 1
     }
   },
   methods: {
@@ -24,13 +28,23 @@ export default {
       this.upcomingList = [];
       var moviesObj = this.upcomingList;
       let apiKey = 'bfa57bdf44f2db86ebcd6f2c5f120098';
-      axios.get('https://api.themoviedb.org/3/movie/upcoming?api_key=' + apiKey + '&language=en-US&page=1')
+      axios.get('https://api.themoviedb.org/3/movie/upcoming?api_key=' + apiKey + '&language=en-US&page='+ this.currentPage)
       .then(function(response) {
         // console.log(response.data.results);
         response.data.results.map(function(value, key){
             moviesObj.push(value);
         });
       });
+    },
+    loadMore() {
+      this.currentPage++;
+      let apiKey = 'bfa57bdf44f2db86ebcd6f2c5f120098';
+      axios.get('https://api.themoviedb.org/3/movie/upcoming?api_key=' + apiKey + '&language=en-US&page='+ this.currentPage)
+      .then(function(response){
+          let data = response.data;
+          let newData = this.upcomingList.concat(data.results);
+          this.upcomingList = newData;
+      }.bind(this));
     }
   },
   mounted() {
@@ -41,15 +55,19 @@ export default {
 
 <style lang="scss">
 .upcoming {
+  &__heading {
+    padding: 0 0 20px 20px;
+    color: rgba(8, 28, 36, 0.5);
+    font-size: 1.2rem;
+  }
   width: 100%;
-  padding: 1rem 0;
   &__movie-wrapper {
     text-align: center;
   }  
   &__movie {
     display: inline-block;
     max-width: 185px;
-    margin: 5px 10px;
+    margin: 5px 20px 50px;
     vertical-align: top;
     cursor: pointer;
   }
@@ -63,6 +81,17 @@ export default {
   }
   &__movie-title {
       padding: 1rem 0;
+      color: rgba(8, 28, 36, 0.5);
+      font-size: 14px;
+  }
+  &__more {
+    display: block;
+    margin: 10px auto 30px;
+    width: 100px;
+    padding: 10px;
+    border: 1px solid #212121;
+    text-align: center;
+    cursor: pointer;
   }
 }
 </style>

@@ -3,7 +3,8 @@
     <div class="header">
       <h1>Movie app made using VueJS and TMDB API</h1>
     </div>
-      <navigation></navigation><section class="main">
+      <navigation></navigation>
+      <section class="main">
         <router-view></router-view>
       </section>
   </div>
@@ -32,6 +33,9 @@ export default {
   color: #fff;
   font-size: 1.25rem;
   display: table;
+  position: fixed;
+  top: 0;
+  z-index: 999;
   h1 {
     display: table-cell;
     vertical-align: middle;
@@ -42,15 +46,13 @@ export default {
 body {
   font-size: 16px;
   font-family: 'Verdana', serif;
+  background: #f8f8f8;  
 }
 
 .main {
-  width: 80%;
-  display: inline-block;
-}
-  
-.main, .nav {
-  vertical-align: top;
+  width: calc(100% - 300px);
+  margin-left: 250px;
+  margin-top: 85px;
 }
 
 </style>

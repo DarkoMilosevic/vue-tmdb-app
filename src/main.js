@@ -5,6 +5,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import App from './App'
 import router from './router'
+import 'vue-awesome/icons'
+
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('icon', Icon)
 
 Vue.use(VueAxios, axios);
 
@@ -17,3 +21,7 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+var hub = require('vue');
+
+window.Hub = new Vue;

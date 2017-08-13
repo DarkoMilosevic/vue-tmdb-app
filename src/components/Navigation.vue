@@ -11,11 +11,11 @@
         data() {
             return {
                 menuItems: [
-                    { icon: 'face', title: 'Home', link: '/' },
-                    { icon: 'face', title: 'Popular', link: '/Popular' },
-                    { icon: 'collections', title: 'Top Rated', link: '/TopRated' },
-                    { icon: 'collections', title: 'Upcoming', link: '/Upcoming' },
-                    { icon: 'collections', title: 'Now Playing', link: '/NowPlaying' }
+                    { title: 'Home', link: '/' },
+                    { title: 'Popular', link: '/Popular' },
+                    { title: 'Top Rated', link: '/TopRated' },
+                    { title: 'Upcoming', link: '/Upcoming' },
+                    { title: 'Now Playing', link: '/NowPlaying' }
                 ]
             }
         }
@@ -25,8 +25,12 @@
 <style lang="scss">
 
 .nav {
-    width: 20%;
-    display: inline-block;
+    width: 250px;
+    height: 100vh;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    padding-top: 65px;
     &__list {
         width: 100%;
         max-width: 380px;
@@ -37,8 +41,7 @@
         display: block;
         width: 100%;
         max-width: 380px;
-        padding: 1.5rem 0;
-        font-size: 1.2rem;
+        padding: 1.75rem 0;
         cursor: pointer;
         transition: 0.3s ease;
         text-decoration: none;
@@ -49,27 +52,4 @@
         }
     }
 }
-
-/* .nav {
-    width: 20%;
-    display: inline-block;
-}    
-.list {
-    width: 20%;
-    text-align: center;
-    position: fixed;
-}
-.item {
-    display: block;
-    width: 100%;
-    padding: 1.5rem 0;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-.item:hover {
-    background: #2ecc71;
-    color: #fff;
-    transition: 0.3s ease;
-} */
 </style>
