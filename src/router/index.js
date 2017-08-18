@@ -5,6 +5,7 @@ import Popular from '@/components/Popular'
 import TopRated from '@/components/TopRated'
 import Upcoming from '@/components/Upcoming'
 import NowPlaying from '@/components/NowPlaying'
+import MoviePopup from '@/components/MoviePopup'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/NowPlaying',
       name: 'NowPlaying',
       component: NowPlaying
+    },
+    {
+      path: '/MoviePopup',
+      name: 'MoviePopup',
+      component: MoviePopup
     }
   ],
   mode: 'history'

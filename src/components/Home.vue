@@ -2,7 +2,7 @@
     <section class="home">
         <input type="text" v-model.trim="query" @keyup.enter="searchMovies()" class="home__input" placeholder="Type here to search for movies...">
         <div class="home__movie-wrapper">
-          <div class="home__movie" v-for="(movie, index) in moviesList">
+          <div class="home__movie" v-for="(movie, index) in moviesList" :id="movie.id" @click="select">
               <img :src=posterPath+movie.poster_path alt="" class="home__movie-img"> 
               <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
               <p class="home__movie-title">{{ movie.title }}</p>
@@ -21,7 +21,8 @@ export default {
     return {
       query: '',
       moviesList: [],
-      posterPath: 'http://image.tmdb.org/t/p/w185/'
+      posterPath: 'http://image.tmdb.org/t/p/w185/',
+      id: ''
     }
   },
   methods: {

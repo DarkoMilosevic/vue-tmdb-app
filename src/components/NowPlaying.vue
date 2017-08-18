@@ -1,26 +1,31 @@
 <template>
     <section class="playing">
         <h2 class="playing__heading">Now Playing Movies</h2>
-        <div class="playing__movie" v-for="(movie, index) in playingList">
+        <div class="playing__movie" v-for="(movie, index) in playingList" :id="movie.id" @click="select">
             <img :src=posterPath+movie.poster_path alt="" class="playing__movie-img"> 
             <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
             <p class="playing__movie-title">{{ movie.title }}</p>
         </div>
-        <div @click.prevent="loadMore" class="playing__more">Load More</div>
+        <div @click="loadMore" class="playing__more">Load More</div>
+
+        <!-- <movie-popup></movie-popup> -->
     </section>
 </template>
 
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moviePopup from './MoviePopup.vue'
 
 export default {
   name: 'app',
+  components: { moviePopup },
   data () {
     return {
       playingList: [],
       posterPath: 'http://image.tmdb.org/t/p/w185/',
-      currentPage: 1
+      currentPage: 1,
+      id: '',
     }
   },
   methods: {
@@ -44,6 +49,11 @@ export default {
           let newData = this.playingList.concat(data.results);
           this.playingList = newData;
       }.bind(this));
+    },
+    select(e) {
+        this.id = e.currentTarget.id; 
+        // console.log(this.id)
+        localStorage.setItem('movieID', this.id);
     }
   },
   mounted() {
