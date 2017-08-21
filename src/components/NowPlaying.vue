@@ -7,8 +7,7 @@
             <p class="playing__movie-title">{{ movie.title }}</p>
         </div>
         <div @click="loadMore" class="playing__more">Load More</div>
-
-        <!-- <movie-popup></movie-popup> -->
+        <movie-popup v-if="viewable"></movie-popup>
     </section>
 </template>
 
@@ -16,6 +15,7 @@
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import moviePopup from './MoviePopup.vue'
+import { EventBus } from '../main.js';
 
 export default {
   name: 'app',
@@ -26,6 +26,8 @@ export default {
       posterPath: 'http://image.tmdb.org/t/p/w185/',
       currentPage: 1,
       id: '',
+      movie: '',
+      viewable: false,
     }
   },
   methods: {
@@ -52,8 +54,16 @@ export default {
     },
     select(e) {
         this.id = e.currentTarget.id; 
-        // console.log(this.id)
-        localStorage.setItem('movieID', this.id);
+        let movieID = this.id;
+        let movie = this.movie;
+
+        let apiKey = 'bfa57bdf44f2db86ebcd6f2c5f120098';
+        axios.get('https://api.themoviedb.org/3/movie/' + movieID + '?api_key=' + apiKey + '&language=en-US')
+        .then(function(response) {
+            movie = response.data;
+            EventBus.$emit('movieDetails', movie);
+        }); 
+        this.viewable = true;
     }
   },
   mounted() {

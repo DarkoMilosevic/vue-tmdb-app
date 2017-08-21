@@ -1,10 +1,13 @@
 <template>
-    <section class="popup">
-        <div class="popup__wrapper">
-            <div class="playing__movie" v-for="(movie, index) in selectedMovie" :id="movie.id" @click="select">
+    <section class="movie" v-if="viewable">
+        <div class="movie__wrapper">
+            <div class="movie__details">
+                <div class="movie__bg" :style="{ backgroundImage: 'url(' + backdropPath+movie.backdrop_path + ')' }"></div>
+            <div @click="remove" class="close">X</div>
                 <img :src=posterPath+movie.poster_path alt="" class="playing__movie-img"> 
                 <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
                 <p class="playing__movie-title">{{ movie.title }}</p>
+                <p class="playing__movie-title">{{ movie.overview }}</p>
             </div>
         </div>
     </section>
@@ -13,7 +16,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import { eventBus } from '../main';
+import { EventBus } from '../main.js';
 
 export default {
   name: 'app',
@@ -22,34 +25,58 @@ export default {
       query: '',
       selectedMovie: [],
       posterPath: 'http://image.tmdb.org/t/p/w185/',
-      id: ''
+      backdropPath: 'http://image.tmdb.org/t/p/original/',
+      movie: '',
+      viewable: true,      
     }
   },
   methods: {
-    movieDetails() {
-        let moviesObj = this.selectedMovie;
-        let movieID = this.id;
-        let apiKey = 'bfa57bdf44f2db86ebcd6f2c5f120098';
-        axios.get('https://api.themoviedb.org/3/movie/' + movieID + '?api_key=' + apiKey + '&language=en-US')
-        .then(function(response) {
-            moviesObj.push(response.data);
-        });
+    remove() {
+      this.viewable = false
     }
   },
   mounted() {
-    var movie = JSON.parse(localStorage.getItem('movieID'));
-        
-    this.id = movie;
-      
-    this.movieDetails();
+    EventBus.$on('movieDetails', ($event) => {
+        this.movie = $event;
+        this.viewable = true;
 
-    //moram napraviti da svaki put kad korisnik klikne na film, on ponovo uradi request za popup i prikaze novi film
-
-    //moram naci bolji nacin da pozivam movieDetails(), on bi trebao biti pozvan na taj klik na neki film
+        console.log(this.movie)
+    });
   }
 }
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+.movie {
+    height: 100vh;
+    overflow: hidden;
+    &__wrapper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 99999;
+        top: 0;
+        left: 0;
+        background: rgba(39,174,96 ,0.7);
+    }
+    &__bg {
+        width: 100%;
+        height: 300px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    &__details {
+        width: 100%;
+        max-width: 900px;
+        background: #fff;
+        display: block;
+        margin: 0 auto;
+    }
+}
+.close {
+  position: absolute;
+  z-index: 9999999;
+  top: 0;
+  left: 0;
+}
 </style>

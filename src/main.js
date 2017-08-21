@@ -14,6 +14,8 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false
 
+export const EventBus = new Vue();
+
 new Vue({
   el: '#app',
   router,
