@@ -1,7 +1,7 @@
 <template>
     <section class="popular">
         <h2 class="popular__heading">Popular Movies</h2>
-        <div class="popular__movie" v-for="(movie, index) in popularList" :id="movie.id" @click="select">
+        <div class="popular__movie" v-for="(movie, index) in popularList" :id="movie.id" @click="select" :key="movie.id">
             <img :src=posterPath+movie.poster_path alt="" class="popular__movie-img"> 
             <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
             <p class="popular__movie-title">{{ movie.title }}</p>
@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .popular {
   width: 100%;
   &__heading {

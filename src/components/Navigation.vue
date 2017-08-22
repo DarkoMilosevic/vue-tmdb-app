@@ -34,7 +34,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .nav {
     width: 250px;

@@ -1,7 +1,7 @@
 <template>
     <section class="top">
         <h2 class="top__heading">Top Rated Movies</h2>
-        <div class="top__movie" v-for="(movie, index) in topList" :id="movie.id" @click="select">
+        <div class="top__movie" v-for="(movie, index) in topList" :id="movie.id" @click="select" :key="movie.id">
             <img :src=posterPath+movie.poster_path alt="" class="top__movie-img"> 
             <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
             <p class="top__movie-title">{{ movie.title }}</p>
@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .top {
   width: 100%;
   &__heading {

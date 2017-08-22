@@ -1,7 +1,7 @@
 <template>
     <section class="upcoming">
         <h2 class="upcoming__heading">Upcoming Movies</h2>
-        <div class="upcoming__movie" v-for="(movie, index) in upcomingList" :id="movie.id" @click="select">
+        <div class="upcoming__movie" v-for="(movie, index) in upcomingList" :id="movie.id" @click="select" :key="movie.id">
             <img :src=posterPath+movie.poster_path alt="" class="upcoming__movie-img"> 
             <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
             <p class="upcoming__movie-title">{{ movie.title }}</p>
@@ -73,7 +73,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .upcoming {
   &__heading {
     padding: 0 0 20px 20px;

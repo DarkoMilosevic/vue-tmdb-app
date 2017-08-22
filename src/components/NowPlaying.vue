@@ -1,7 +1,7 @@
 <template>
     <section class="playing">
         <h2 class="playing__heading">Now Playing Movies</h2>
-        <div class="playing__movie" v-for="(movie, index) in playingList" :id="movie.id" @click="select">
+        <div class="playing__movie" v-for="(movie, index) in playingList" :id="movie.id" @click="select" :key="movie.id">
             <img :src=posterPath+movie.poster_path alt="" class="playing__movie-img"> 
             <img v-if="movie.poster_path == null" class="home__movie-img" src="../assets/images/no-image.jpg" alt="">
             <p class="playing__movie-title">{{ movie.title }}</p>
@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped> 
 .playing {
   &__heading {
     padding: 0 0 20px 20px;
